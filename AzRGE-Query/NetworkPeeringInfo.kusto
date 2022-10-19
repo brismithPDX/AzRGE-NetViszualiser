@@ -1,0 +1,7 @@
+Resources
+| where type =~ 'Microsoft.Network/virtualNetworks'
+| where tostring(properties.virtualNetworkPeerings) != "[]"
+| project name, location, resourceGroup, properties.virtualNetworkPeerings
+| mvexpand properties_virtualNetworkPeerings
+| parse kind=regex properties_virtualNetworkPeerings.properties.remoteVirtualNetwork.id with 'virtualNetworks/' dst_vnet
+| project peering_name = properties_virtualNetworkPeerings.name, src_vnet = name, dst_vnet , resourceGroup

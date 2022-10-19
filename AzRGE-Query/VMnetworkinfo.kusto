@@ -1,0 +1,9 @@
+Resources
+| where type =~ 'microsoft.network/networkinterfaces' and resourceGroup !contains "365" and resourceGroup !contains "databricks"
+| project name, id, ipConfigurations = properties.ipConfigurations, vmProperties = properties.virtualMachine.id, resourceGroup
+| mvexpand ipConfigurations
+| project name, id, subnetId = tostring(ipConfigurations.properties.subnet.id), privateIp = tostring(ipConfigurations.properties.privateIPAddress), vmProperties, resourceGroup
+| parse kind=regex subnetId with '/virtualNetworks/' virtualNetwork '/subnets/' subnet
+| parse kind=regex vmProperties with 'virtualMachines/' vmName
+| where vmName != ""
+| project virtualNetwork, subnet, privateIp, vmName, resourceGroup
