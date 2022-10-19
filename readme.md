@@ -8,7 +8,7 @@ This project lets us visualize the entirety of the an azure network environment 
 
 ### Project History
 
-This project is the result of a 
+This project is the result of a internal network mapping and visualization tool written by me for a employer who has graciously allowed the code to be shared as is w/ out support.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
